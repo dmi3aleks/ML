@@ -2,27 +2,21 @@ function p = predictOneVsAll(all_theta, X)
 %PREDICT Predict the label for a trained one-vs-all classifier.
 
 m = size(X, 1);
-num_labels = size(all_theta, 1)
-
-p = zeros(size(X, 1), 1);
 X = [ones(m, 1) X];
 
-e = size(X,1)
+A = X * all_theta';
+% A has dimensions: (amount_of_examples, amount_of_labels)
+% A(i,j): probability proxy for input i belonging to type j.
+[v,p] = max(A, [], 2);
 
-for i = 1:e
-  max_val = -32;
-  max_ind = 1;
-  for j = 1:num_labels
-    A = X(i,:) * (all_theta(j,:))';
-    if A > max_val
-      max_val = A;
-      max_ind = j;
-    end
-  end
-  p(i) = max_ind;
+% less elegant and more intuitive implementation:
+%{
+for i = 1:2
+    A = X(i,:) * all_theta';
+    % A is (1,10)
+    disp(size(A));
+    [max_val, p(i)] = max(A);
 end
-
-% =========================================================================
-
+%}
 
 end
