@@ -37,6 +37,8 @@ Training algorithm for node weights:
 
 Applying neural network: for any new example, convert it to feature vector and apply a transformation dictated by the network weights (layer by layer) to get the prediction (E.g. picking a class with the highest value in the output layer).
 
+## Support Vector Machines
+
 
 ## Learning with large datasets
 
@@ -88,3 +90,29 @@ Example applicatoin is an online resource that offers shipping services. For eac
 
 Many learning algorithms involve calculating summs of function application to large training sets.
 Such calculation can be split in chunks and distributed between CPU cores or computers in a newtwork and then a sum can be assembled with a map-reduce job.
+
+## Photo OCR
+
+Problem: detect and recognize text in images.
+
+### Photo OCR pipeline:
+1. text detection: given an image, find areas containing text (E.g. using a "sliding window" technique plus region expansion [similar to dilation]);
+1. character segmentation: find splits between individual characters in a text region (E.g. sliding window in the text region + detection check based on a classifier: E.g a specially trained NN for splits);
+1. character classification: classify individual characters (take areas between splits and pass them to a classifier one by one [E.g. a NN]).
+
+### Notes and considerations:
+1. artificial data synthesis can be used to get more data for a training set (E.g. rendering artificial pictures with text);
+1. more data can be synthesized by adding meaningful distortions to the exisitng data (E.g. warps);
+1. adding Gaussian noise is not helpful in terms of data synthesis;
+1. it is important to make sure that classifier being used has low bias (can verify by plotting learning curves) so that getting more data would result in a better fit;
+1. when working on an ML problem it is worth asking the following question: "How much work would it be to get 10x as much data as we currently have?". Sometimes it is surprisingly inexpensive to get more data and as a result get a better performing algorithm.
+
+### Ceiling analysis
+
+Ceiling analysis helps answer the question of what part of the pipline should be improved.
+
+Algorithm:
+
+1. estimate accuracy of the overal pipeline given a test set;
+1. pick a single part of a pipeline and substitute its outcome with perfect manually created results - check how the overal pipeline accurace changes as the result;
+1. if there is no much change, than probably it is not worth investing into this part of the pipeline and find one improvements to which can improve the overall accuracy substantially.
