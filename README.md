@@ -91,6 +91,34 @@ Example applicatoin is an online resource that offers shipping services. For eac
 Many learning algorithms involve calculating summs of function application to large training sets.
 Such calculation can be split in chunks and distributed between CPU cores or computers in a newtwork and then a sum can be assembled with a map-reduce job.
 
+## Anomaly Detection
+
+Unsupervised learning algorithm.
+
+Problem: identify unusual data points.
+
+Algorithm:
+1. choose features Xi that are believed to be indicative of anomalous examples and project the training set into a feature space;
+1. fit parameters MUi and SIGMAi for a Gaussian distribution that would model a training set;
+1. for a new example, compute its probabilty using a multi-dimensional probability density function;
+1. mark example as anomalous if its probability is lower than a pre-picked threshold Epsilon.
+
+Algorithm evaluation and choosing the right Epsilon:
+1. split available data into training, cross validation and test sets;
+1. fit a model to the training set;
+1. for various Epsilon values:
+- calculate precision/recall or an F1 Score on a cross-validation and pick an Epsilon that optimizes it.
+Precision = (True Positives)/(True Positives + False Positives)
+Recall = (True Positives)/(True Positives + False Negatives)
+F1Score = 2*Recall*Precision/(Recall + Precision).
+
+Notes:
+1. anomaly detection is a better fit for a problem as opposed to the supervised learning algorithm when:
+- there is a very small number of positive examples (anomalies);
+- there is a large amount of negative examples (i.e. regular cases);
+- many different types of anomalies are anitipated (i.e. it is hard to learn from previous examples).
+
+
 ## Photo OCR
 
 Problem: detect and recognize text in images.
