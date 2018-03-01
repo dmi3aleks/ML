@@ -118,6 +118,42 @@ Notes:
 - there is a large amount of negative examples (i.e. regular cases);
 - many different types of anomalies are anitipated (i.e. it is hard to learn from previous examples).
 
+## Recommender system
+
+Problem statement: to recommend a new item to a user based on the ratings he gave before to other items and on ratings from other users.
+
+### Content-based recommender system
+
+Assumption:
+1. items have a known set of features and have numerical values for them (i.e. can be projected to the feature space as vector Xi);
+1. user has rater at least some items.
+
+#### Algorithm
+
+Cost function:
+- Alt A: for each user minimize a sum of prediction error for all content items by picking an optimal Theta, where prediction Yi = Theta' * Xi for item i;
+- Alt B: find Theta for multiple user by optimizing a sum of total error across a set of users.
+
+Note: need to add regularization by penalizing high values of weights in order to avoid overfitting.
+
+Gradient descent update (partial derivative of a cost function with regard to Theta): similar to that of a linear regression.
+
+Pass cost function and partial derivatives to the optimization method (E.g. fminunc) to obtain an optimal set of weights Theta.
+
+### Collaborative Filtering
+
+Is useful when there is no pre-defined set of features for items being rated.
+
+Basically we are trying to find optimal values for item features as well as optimal weights that, when applied to each other, would minimze an error with regard to the actual user ratings.
+
+Algorithm:
+1. initialize feature vectors and weights vectors to small random numbers;
+1. minimize cost function combining features and weights using gradient descent or similar optimisation method;
+1. to make a prediction calculate: Theta(user)' * x(item), where both Theta and x have been learned in the optimisation step above.
+
+Note: if feature vectors for items being rated are known or once they are learned, items can be projected into the feature space and similarity between them can be established using an absolute distance between vectors.
+
+Note: in case there are many missing ratings, Mean Normalization technique can be helpful to get better predictions. Namely, it is a transformation of the rating values that subtracts mean rating for a given item from all ratings for this item. Once optimization has found feature and weight values, rating for a new combination of user and item can be calculated as: Theta(user)' * x(movie) + MeanRating(movie).
 
 ## Photo OCR
 
