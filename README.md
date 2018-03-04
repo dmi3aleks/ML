@@ -62,6 +62,51 @@ Picking the right amount of clusters K:
 1. Elbow method: plot minimum of the cost function with regard to the amount of clusters - pick K at the "elbow" of the graph (i.e. the last one that gives a substantial improvement in terms of cost function reduction);
 1. An alternative is to look at how clusters are going to be used later by the downstream purpose (E.g. see what K enables downstream calculation to perform the best).
 
+## Dimensionality Reduction and Principal Component Analysis
+
+Can be used for data compression. For example, reducing data from 3D to 2D.
+
+Objective: make a projection of points in 3D space on a plane in such a way that the total distance to the plane is minimal (i.e. maximum variability of the data is retained).
+
+Another application: data visualization (as it is hard to visualize more than 3D space).
+
+Another one: sppeding up learning algorithm.
+
+### Principal Component Analysis
+
+Reduce from n-dimension to k-dimension: find k vectors onto which to project the data, so as to minimize the projection error.
+
+#### Algorithm
+
+Pre-processing:
+
+Do feature scaling and mean normalization: Xj = (Xj - MUj)/SIGMAj
+
+Main steps:
+1. calculate a covariance matrix:
+Sigma = (1/m) * SUM(Xi * Xi');
+1. compute eigenvectors of matrix Sigma:
+[U, S, V] = svd(Sigma);
+1. take only first k vectors:
+Ureduce = U(:, 1:k)
+1. calculate a projection:
+z = Ureduce' * x.
+
+To reconstruct data from a reduced form:
+1. Xi = Ureduce * Zi.
+
+Choosing k (number of principal components):
+1. [U, S, V] = svd(Sigma);
+1. pick smallest value of k for which:
+SUM(Sigma(i,i) where i = 1, k) / SUM(Sigma(i,i) where i = 1 to last) >= 0.99 i.e. 99% of varience is retained.
+
+### Applying unsupervised learning
+
+Find dimension reducing mapping on a training set. Pick one that performs the best on the cross-validation set.
+Estimate performance on the test set.
+
+Note: applying PCA to reduce overfitting is not a good idea, use regularization instead ((lambda/2*m)*SUM(THETAj^2)).
+
 ## Learning with large datasets
 
 "It's not who has the best algorithm that wins. It's who has the most data".j
