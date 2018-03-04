@@ -40,6 +40,28 @@ Applying neural network: for any new example, convert it to feature vector and a
 ## Support Vector Machines
 
 
+## Clustering using K-means algorithm (unsupervised learning)
+
+Problem statement: find clusters in an unlabeled dataset.
+
+Optimization objective: find such K centroids for clusters that the total distortion (sum of distances between a point and its cluster centroid) are minimal.
+
+Algorithm:
+1. randomly initialize K cluster centroids (E.g. by picking K data points from the input set at random);
+1. repeat:
+- find the closest centroid for each data point in the input set;
+- update cluster centroids with a mean of the data points it is linked to.
+
+Since there is a chance to converge to a local minimum, it makes sense to:
+1. for many different random initializations for centroid centers:
+- run algorithm to convergence;
+- calculate the cost function.
+2. pick the result with the smallest value of the cost function.
+
+Picking the right amount of clusters K:
+1. Elbow method: plot minimum of the cost function with regard to the amount of clusters - pick K at the "elbow" of the graph (i.e. the last one that gives a substantial improvement in terms of cost function reduction);
+1. An alternative is to look at how clusters are going to be used later by the downstream purpose (E.g. see what K enables downstream calculation to perform the best).
+
 ## Learning with large datasets
 
 "It's not who has the best algorithm that wins. It's who has the most data".j
