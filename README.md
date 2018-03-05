@@ -39,6 +39,31 @@ Applying neural network: for any new example, convert it to feature vector and a
 
 ## Support Vector Machines
 
+This is a supervised learning technique that is somewhat similar to logistic regression with a Large Margin optimization.
+
+Instead of a sigmoid used in the logistic regression, a special cost function is used:
+1. "\_" for a positive example (i.e. is growing linearly as X values go farther from 1 in a direction of negative values;
+1. "_/" for a negative example (i.e. is growing linearly as X values go farther from -1 in a direction of positive values.
+
+Application example: large margin classifier, which will try to split data points into classes while maximizing the margin.
+
+### Kernel
+
+Given input data set with points X we pick a few of them randomly and call them landmarks.
+
+We build a new set of features based on proximity of data points to landmarks.
+
+For Gaussian kernels, we introduce a similarity function to calculate values of new features. F1 = exp( - (|x - l1|/(2*sigma^2))).
+
+Changing sigma results in changing the shape of the similarity function.
+
+We predict 1 if Theta0 + Theta1*F1 + ... ThetaN*FN >= 0.
+
+SVM is represented in Octave/Matlab as liblinear, libsvm packages.
+
+### Multi-class classification
+
+
 
 ## Clustering using K-means algorithm (unsupervised learning)
 
