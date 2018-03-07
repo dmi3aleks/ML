@@ -63,7 +63,23 @@ SVM is represented in Octave/Matlab as liblinear, libsvm packages.
 
 ### Multi-class classification
 
+Many SVM packages already have built-in multi-class classification functionality.
 
+Otherwise, one can use a one-vs-all method. Namely, to train K separate SVM models, one for each class of points.
+
+For each new point, calculate Theta[1..K] and pick the class with the highest prediction value.
+
+### A rule of thumb for applying SVM VS applying logistic regression
+
+Legend:
+n: number of features
+m: number of examples
+
+1. if n is large relative to m: use logistic regression or SVM without a kernel (i.e. using a linear kernel);
+1. if n is small, while m is intermediate: use SVM with Gaussian kernel;
+1. if n is small, while m is large: create or add more features, then use a logistic regression or SVM without kernel.
+
+Note: a Neural Network is likely to work well for all of the cases above, but it is slower to train.
 
 ## Clustering using K-means algorithm (unsupervised learning)
 
