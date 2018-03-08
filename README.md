@@ -37,6 +37,67 @@ Training algorithm for node weights:
 
 Applying neural network: for any new example, convert it to feature vector and apply a transformation dictated by the network weights (layer by layer) to get the prediction (E.g. picking a class with the highest value in the output layer).
 
+## Advice for applying machine learning
+
+It is important to estimate model performance by minimizing a test error on a cross-validation set.
+
+### Algorithm
+
+Split your example data into:
+1. 60%: training set;
+1. 20%: test set;
+1. 20%: cross-validation set.
+
+For each set of model parameters:
+1. train model on a training set;
+1. calculate test error on a test set;
+1. pick a parameter set that minimizes training error on a test set;
+1. calculate cross-validation error -> this becomes an estimate of model performance.
+
+### Diagnosing Bias VS Variance
+
+High Bias is a phenomenon that occurs when a model is build upon a strong sentiment that does not actually model the data in question well.
+High Bias results in underfitting (E.g. picking a linear regression model for a data that follows a polynomial curve).
+
+High Variance is a phenomenon that occurs when model overfits a training set (E.g. a high order polynomial is used).
+
+It helps to plot a dependency of error values on model parameters to see whether algorithm is suffering from bias or from varience:
+1. plot test error and cross-validation (CV) error against a variable model parameter (E.g. an order of polynomial used in a regression model);
+1. if both test error and CV error are high for a given value of a parameter - it is idicative of a high bias;
+1. if test error is low but CV error is high - it is indication of a high variance.
+
+### Regression with regularization and Bias/Variance
+
+Large values of a regularization coefficient Lambda penalize high values of regression weights Theta, leading to a high bias (underfitting).
+Small values of a regularization coefficient Lambda encourage high variance (overfitting).
+
+To pick an optimal value for a regularization coefficient Lambda one can try multiple values and pick the one that minimizes the cross-validation error.
+
+### Learning Curves
+
+Plot cross-validation error and training error against the amount of examples used in a training set:
+1. In case of a high bias, both CV error and training error will be quite high (and will get close to each other pretty soon). If a learning algorithm is suffering from high bias, getting more training data will not (by itself) help much.
+1. In case of high varience, training error will be relatively low, but CV error will be initially high, getting lower as the amount of examples in a training set increases. If a learning algorithm is suffering from high variance, getting more training data is likely to help.
+
+### Typical fixes for high bias and high varience
+
+High bias:
+1. try getting additional features;
+1. try adding polynomial features;
+1. try decreasing a regularization parameter Lambda.
+
+High variance:
+1. get more training examples;
+1. try a smaller set of features;
+1. try increasin a regularization parameter lambda.
+
+### Bias and variance with Neural Networks
+
+Neural Networks with a small amount of layers and nodes in middle layers, though computationally cheaper to train, tend to be prone to high bias.
+
+Naural Networks with a large amount of layers and nodes in middle layers, tend to be computationally more expensive and can suffer from high variance. Using regularization helps to address overfitting.
+
+
 ## Support Vector Machines
 
 This is a supervised learning technique that is somewhat similar to logistic regression with a Large Margin optimization.
