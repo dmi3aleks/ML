@@ -97,6 +97,32 @@ Neural Networks with a small amount of layers and nodes in middle layers, though
 
 Naural Networks with a large amount of layers and nodes in middle layers, tend to be computationally more expensive and can suffer from high variance. Using regularization helps to address overfitting.
 
+### Building a Spam Classifier
+
+#### Error Analysis
+
+1. start with a simple algorithm that can be implemented quickly;
+1. plot learning curves to decide if more data, more features, etc. are likely to help;
+1. manually examine the examples your algoritm made errors on. See if there is a systematic trend.
+
+
+#### Numerial evaluation of algorithm performance
+
+When evaluating algorithm it is important to have a quick numerical metric of how good it performs.
+
+It is important to use correct metrics for skewed classes (i.e. when there is a big disbalance between the amount of positive and negative examples). Such metrics are:
+
+Precision = True Positives/(True Positives + False Positives)
+
+Recall = Ture Positives/(True Positives + False Negatives)
+
+F1Score = 2 * (Precision * Recall)/(Precision + Recall)
+
+#### Designing a high accuracy learning system
+
+Features should have sufficient information to predict the result accurately.
+
+Useful test: given the input features, can a human expert confidently predict the result?
 
 ## Support Vector Machines
 
