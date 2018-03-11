@@ -126,9 +126,9 @@ Useful test: given the input features, can a human expert confidently predict th
 
 ## Support Vector Machines
 
-This is a supervised learning technique that is somewhat similar to logistic regression with a Large Margin optimization.
+This is a supervised learning technique that is somewhat similar to logistic regression with an addition of a Large Margin optimization.
 
-Instead of a sigmoid used in the logistic regression, a special cost function is used:
+Instead of a sigmoid used in a Logistic Regression, a special cost function is used:
 1. "\_" for a positive example (i.e. is growing linearly as X values go farther from 1 in a direction of negative values;
 1. "_/" for a negative example (i.e. is growing linearly as X values go farther from -1 in a direction of positive values.
 
@@ -167,6 +167,24 @@ m: number of examples
 1. if n is small, while m is large: create or add more features, then use a logistic regression or SVM without kernel.
 
 Note: a Neural Network is likely to work well for all of the cases above, but it is slower to train.
+
+### Applying SVM to Spam Classification
+
+Algorithm.
+1. preprocessing an email:
+- lower-casing all words;
+- stripping HTML (remove all the HTML tags);
+- normalizing URLs (all URLs get replaced with a fixed token, E.g. "httpaddr");
+- nomralizing email addresses;
+- normalizing numbers;
+- normalizing currency signs;
+- word stemming (using a dictionary form of a word);
+- removeal of non-words;
+1. extract features from the email:
+- map resulting text to word indices using a Vocabulary List (VL). VL is a list of words most commonly used in spam emails.
+- convert email to a feature vector of lenght N, where N is the amount of words in the Vocabulary List. Each vector element is a binary value indicating whether a given word from VL is present in a given email;
+1. train an SVM of a resulting set of vectors and corresponding labels;
+1. for any new email apply a transformation with weights from a trained SVM to obtain a spam/non-spam label.
 
 ## Clustering using K-means algorithm (unsupervised learning)
 
