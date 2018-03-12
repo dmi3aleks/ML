@@ -16,26 +16,44 @@ Training set is labeled.
 
 ## Neural Networks
 
-Supervised learning (labeled training dataset).
+A supervised learning algorithm (training dataset is labeled) used for solving classification problems.
 
 Usually applied to classification problems.
 Input is a vector of features (E.g. pixels of an image in a vectorized form).
 
 A few layers of network (2~3):
 1. input layer: usually of the same size as the input feature vector;
-1. [optional] middle layer (amount of nodes is comparable to that of the input layer;
-1. output layer: the same size as the amount of classes.
+1. hidden layers: one by default, or multiple but with the same amount of hidden units in each hidden layer (usually the more units there are the better);
+1. output layer: the same size as the number of classes.
+
+Cost function:
+J(Theta) = -(1/m) * (sum_for_all_examples(sum_for_all_classes( Yk * log(H*Xi) + (1 - Yk)*log(1 - (H*Xi))) + lamda/2*m * sum(THETAij^2)
 
 Training: fitting the weights and biases of the network (bias is a constant node in a network).
 
 Training algorithm for node weights:
-1. assign weights randomly;
-1. make a forward propagation, pushing input data through the network to obtain initial predictions;
-1. calculate vector of errors (expected results minis predictions made by the network);
-1. make a backpropagation pass, pushing error obtained in the previous step through the network, calculating partial derivatives of the cost function with respect to weights and biases;
-1. pass cost funciton and its gradient to the optimization routing (E.g. fminunc) or to a Gradient Descent routine to get an optimal weights and biases for the network.
+1. randomly initialize weights;
+1. implement forward propagation to get a hypothesis vector for each;
+1. implement code to compute cost funciton (J(Thetat));
+1. implement backpropagation to compute partial derivatives of J with regard to THETA(j,k). For each example from a training set:
+- perform forward propagation, pushing input data through the network to obtain the initial hypothesis for a given example;
+- get activation (a) and delta terms for each layer in the network (pushing errors back through the network) and calculate partial detivatives of J with regard to THETA(j,k);
+- use gradient checking to compare patial derivatives computed using backpropagation VS using numerical estimate; then disable gradient checking (as it is computationally expensive);
+1. pass cost funciton and its gradient to the optimization routing (E.g. fminunc) or to a Gradient Descent routine to get an optimal weights and biases for the network (i.e. minimizing J(Theta) as a function of parameter Theta).
 
-Applying neural network: for any new example, convert it to feature vector and apply a transformation dictated by the network weights (layer by layer) to get the prediction (E.g. picking a class with the highest value in the output layer).
+Applying neural network: for any new example, convert it to feature vector and apply a transformation dictated by the network weights (layer by layer) to get a hypothesis (E.g. picking a class with the highest value in the output layer).
+
+### Gradient checking
+
+Backpropagation algorithm is hard to debug and is giving a surprisingly reasonable results even if trivial errors (like off by one) are present in the implementation. One way to make veriy correctness of partial derivatives is to compare those calculated values with numerically calculated estimates.
+
+dJ/dTheta = lim( (J(Theta + Epsilon) - J(Thetat - Epsilon)/2*Epsilon) )
+
+Sufficiently small Epsilon (say around 10^-4) usually work well.
+
+### Random Initialization
+
+Initializing initial Theta to zeroes would result in getting the same values for different units (nodes) of a hidden layer are going to be identical, introducing a false symmetry. Initializing Theta randomly (values is a [-Epsilon, Epsilon] range) allows to break a symmetry.
 
 ## Advice for applying machine learning
 
@@ -126,7 +144,7 @@ Useful test: given the input features, can a human expert confidently predict th
 
 ## Support Vector Machines
 
-This is a supervised learning technique that is somewhat similar to logistic regression with an addition of a Large Margin optimization.
+This is a supervised learning technique that is somewhat similar to logistic regression with an addition a Large Margin optimization.
 
 Instead of a sigmoid used in a Logistic Regression, a special cost function is used:
 1. "\_" for a positive example (i.e. is growing linearly as X values go farther from 1 in a direction of negative values;
