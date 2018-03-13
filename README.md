@@ -31,7 +31,7 @@ J(Theta) = -(1/m) * (sum_for_all_examples(sum_for_all_classes( Yk * log(H*Xi) + 
 
 Training: fitting the weights and biases of the network (bias is a constant node in a network).
 
-Training algorithm for node weights:
+Training algorithm:
 1. randomly initialize weights;
 1. implement forward propagation to get a hypothesis vector for each;
 1. implement code to compute cost funciton (J(Thetat));
@@ -42,6 +42,44 @@ Training algorithm for node weights:
 1. pass cost funciton and its gradient to the optimization routing (E.g. fminunc) or to a Gradient Descent routine to get an optimal weights and biases for the network (i.e. minimizing J(Theta) as a function of parameter Theta).
 
 Applying neural network: for any new example, convert it to feature vector and apply a transformation dictated by the network weights (layer by layer) to get a hypothesis (E.g. picking a class with the highest value in the output layer).
+
+### Activtion function
+
+Activation function is a function that converts a real value of a NN unit into a binary value (of whether neuron is active or not).
+
+We use a sigmoid function as an activation function:
+sigmoid(z) = g(z) = 1/(1 + e^(-z))
+where z is a value computed for a given unit based on input node values and weight values Theta.
+
+Sigmoid function has following properties:
+1. crosses Y axis at 0.5 when z = 0;
+1. produces values close to 1 for sufficiently large positive z (activates a neuron);
+1. produces values close to 0 for sufficiently large negative z (deactivates a neuron).
+
+Sigmoid gradient can be computed as:
+
+g'(z) = d/dz g(z) = g(z)(1 - g(z))
+
+### Random initialization
+
+Initializing parameters randomly for a symmetry breaking: selecting values of THETA(l) uniformly in the range [-Epsilon(l), Epsilon(l)].
+
+An effective strategy for choosing Epsilon is to base it on the number of units in the network.
+
+Epsilon(l) = sqrt(6)/sqrt(L(l) + L(l+1)),
+where L(l) represents the number of units in layer l (input layer for a given Theta) while L(l+1) represents the number of units in the output layer for a given Theta.
+
+### Details for feedforward (forward propagation)
+
+For the input layer A(1) = X (unit value equals feature value)
+
+For fubsequent layers:
+Z(i+1) = Theta(i) * A(i)
+A(i+1) = g(Z(i+1)
+
+For the output layer:
+Z(n) = Theta(n-1) * A(n-1)
+A(n) = g(Z(n)) = H(X) <- hypothesys value.
 
 ### Gradient checking
 
