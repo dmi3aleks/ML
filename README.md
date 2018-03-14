@@ -81,6 +81,19 @@ For the output layer:
 Z(n) = Theta(n-1) * A(n-1)
 A(n) = g(Z(n)) = H(X) <- hypothesys value.
 
+### Details for Backpropagation
+
+Steps below are repeated for each example:
+1. for a given example, first make a forward pass over a network and calculate error terms (delta) for the output layer as follows:
+Delta(k) = A(k) - Y(k)
+1. for each hidden layer, from the last one to the first one:
+Delta(k-1) = (Theta(k-1))' * Delta(k) .* g'(Z(k))
+1. accumulate the gradient for this example:
+D(l) = D(l) + Delta(l+1) * (A(l))'
+1. at the end: divide resulting D by the amount of examples to obtain the unregularized gradient of J(Theta) with regard to Theta(i,j).
+1. add regularization term:
+dJ(Theta)/dTheta(i,j)(l) = (1/m) * D(i,j)(l) + (lambda/m) * Theta(i,j)(l).
+
 ### Gradient checking
 
 Backpropagation algorithm is hard to debug and is giving a surprisingly reasonable results even if trivial errors (like off by one) are present in the implementation. One way to make veriy correctness of partial derivatives is to compare those calculated values with numerically calculated estimates.
