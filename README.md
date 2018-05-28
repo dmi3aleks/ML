@@ -158,7 +158,7 @@ High bias:
 High variance:
 1. get more training examples;
 1. try a smaller set of features;
-1. try increasin a regularization parameter lambda.
+1. try increasing a regularization parameter lambda.
 
 ### Bias and variance with Neural Networks
 
